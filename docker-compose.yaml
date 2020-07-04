@@ -9,7 +9,7 @@ services:
     ports:
       - "3306:3306"
     #volumes:
-      ##- ./database:/var/lib/mysql
+      #- ./database:/var/lib/mysql
     restart: unless-stopped
     healthcheck:
         test: "/usr/bin/mysql --user=root --password=root --execute \"SHOW DATABASES;\""
@@ -17,18 +17,17 @@ services:
     networks:
       - nw-internal
 
-  # code_migration:
-  #   image: pauloandresoares/codeadventure-backend:latest
-  #   environment:
-  #     NODE_ENV: production 
-  #   command: sequelize db:migrate && sequelize db:seed:all
-  #   depends_on:
-  #     code_database:
-  #       condition: service_healthy
-    
+  code_migration:
+    image: thecodeadventure/backend:latest
+    environment:
+      NODE_ENV: production 
+    command: sequelize db:migrate && sequelize db:seed:all
+    depends_on:
+      code_database:
+        condition: service_healthy
 
   code_backend:
-    image: pauloandresoares/codeadventure-backend:latest
+    image: thecodeadventure/backend:latest
     container_name: code_backend    
     environment:
       NODE_ENV: production 
@@ -42,14 +41,12 @@ services:
     networks:
       - nw-internal  
 
-  #code_frontend:
-  #  image: pauloandresoares/codeadventure-frontend:0.1.0
-  #  ports:
-  #    - "80:80"
-  #  networks:
-  #    - nw-internal  
+  code_frontend:
+    image: thecodeadventure/frontend:latest
+    ports:
+      - "80:80"
+    networks:
+      - nw-internal  
 networks:
   nw-internal:
-    
-
 
