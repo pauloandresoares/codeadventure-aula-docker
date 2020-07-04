@@ -2,11 +2,11 @@ var express = require('express');
 var router = express.Router();
 var model = require('../models/index');
 
-router.get('/contact', function(req, res, next) {
-  model.contact.findAll({})
-    .then(contacts => res.json({
+router.get('/inventory', function(req, res, next) {
+  model.inventory.findAll({})
+    .then(inventories => res.json({
         error: false,
-        data: contacts
+        data: inventories
     }))
     .catch(error => res.json({
         error: true,

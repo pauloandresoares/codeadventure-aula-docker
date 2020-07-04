@@ -299,34 +299,55 @@
 </style>
 
 <!-- Toolbar -->
+<!--
 <div class="toolbar" role="banner">
     <div class="spacer"></div>
 </div>
+-->
 
 <div class="content" role="main">
 
-<h1>Lista de Contatos</h1>
-  
-<table class="table table-hover mt-5">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Nome</th>
-      <th scope="col">Telefone</th>
-      <th scope="col">Data de Cadastro</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr
-      *ngFor="let item of contacts"
-    >
-      <th scope="row">{{ item.id }}</th>
-      <td>{{ item.name }}</td>
-      <td>{{ item.phone }}</td>
-      <td>{{ item.createdAt | date: 'dd/MM/yyyy' }}</td>
-    </tr>
-  </tbody>
-</table>
+
+
+
+
+  <div class="inventory-wrapper">  
+    <div class="chest-image">
+      <img  src="assets/img/chest.png"/>
+    </div>
+    <div *ngIf="inventories.length>0">
+        <table class="table table-hover mt-5">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col"></th>
+              <th scope="col">Nome</th>
+              <th scope="col">Atributo</th>
+              <th scope="col">Durabilidade</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let item of inventories"
+            >
+              <th scope="row">{{ item.id }}</th>
+              <td><img class="inventory-image" src="assets/img/{{ item.category }}_icon.png"/></td>
+              <td>{{ item.name }}</td>
+              <td>{{ item.attribute }}</td>
+              <td>{{ item.durability }}</td>
+            </tr>
+          </tbody>
+        </table>
+    </div> 
+
+    <div *ngIf="inventories.length==0">
+      <div class="message-wrapper">
+        <p>Sem itens no inventário ou Banco de dados inativo</p>
+      </div>  
+    </div>   
+  </div>  
+
+
 
 
 

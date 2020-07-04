@@ -1,0 +1,55 @@
+version: '2.1'
+services:
+  code_database:
+    image: mysql:8
+    container_name: code_database
+    environment:
+      MYSQL_ROOT_PASSWORD: root 
+      MYSQL_DATABASE: codeadventure 
+    ports:
+      - "3306:3306"
+    #volumes:
+      ##- ./database:/var/lib/mysql
+    restart: unless-stopped
+    healthcheck:
+        test: "/usr/bin/mysql --user=root --password=root --execute \"SHOW DATABASES;\""
+        interval: 2s
+    networks:
+      - nw-internal
+
+  # code_migration:
+  #   image: pauloandresoares/codeadventure-backend:latest
+  #   environment:
+  #     NODE_ENV: production 
+  #   command: sequelize db:migrate && sequelize db:seed:all
+  #   depends_on:
+  #     code_database:
+  #       condition: service_healthy
+    
+
+  code_backend:
+    image: pauloandresoares/codeadventure-backend:latest
+    container_name: code_backend    
+    environment:
+      NODE_ENV: production 
+    depends_on:
+      code_database:
+        condition: service_healthy      
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./config/config.json:/usr/src/app/config/config.json       
+    networks:
+      - nw-internal  
+
+  #code_frontend:
+  #  image: pauloandresoares/codeadventure-frontend:0.1.0
+  #  ports:
+  #    - "80:80"
+  #  networks:
+  #    - nw-internal  
+networks:
+  nw-internal:
+    
+
+

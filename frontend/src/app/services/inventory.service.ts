@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { retry, catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
-import { Contact } from '../models/contact';
+import { Inventory } from '../models/inventory';
 import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ContactService {
+export class InventoryService {
 
   url: string = environment.backendUrl; 
 
@@ -18,8 +18,8 @@ export class ContactService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   }
 
-  getContacts(): Observable<Contact[]> {
-    return this.httpClient.get<Contact[]>(this.url+'/contact')
+  getInventories(): Observable<Inventory[]> {
+    return this.httpClient.get<Inventory[]>(this.url+'/inventory')
       .pipe(
         retry(2),
         catchError(this.handleError))

@@ -4,7 +4,6 @@ var model = require('../models/index');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  model.contact.findAll({})
   res.render('index', { title: 'Express' });
 });
 

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { ContactService } from './services/contact.service';
-import { Contact } from './models/contact';
+import { InventoryService } from './services/inventory.service';
+import { Inventory } from './models/inventory';
 
 @Component({
   selector: 'app-root',
@@ -10,17 +10,23 @@ import { Contact } from './models/contact';
 export class AppComponent {
   title = 'frontend';
 
-  contacts: Contact[];
+  inventories: Inventory[] = [];
+  
+  showError: boolean = false;
 
-  constructor(private contactService: ContactService) {}
+  constructor(private inventoryService: InventoryService) {}
   ngOnInit() {
-    this.getContacts();
+    this.getInventories();
   }
 
-  getContacts() {
-    this.contactService.getContacts().subscribe((result: any) => {
-      this.contacts = result.data;
-    });
+  getInventories() {
+    this.inventoryService.getInventories().subscribe((result: any) => {
+        this.inventories = result.data;
+      },(error: any) => {
+        console.log("error");
+        this.showError = true;
+      }
+    );
   }
 
 }
