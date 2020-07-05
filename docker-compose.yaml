@@ -8,24 +8,11 @@ services:
       MYSQL_DATABASE: codeadventure 
     ports:
       - "3306:3306"
-    #volumes:
-      #- ./database:/var/lib/mysql
-    restart: unless-stopped
     healthcheck:
-        test: "/usr/bin/mysql --user=root --password=root --execute \"SHOW DATABASES;\""
-        interval: 2s
+      test: "/usr/bin/mysql --user=root --password=root --execute \"SHOW DATABASES;\""
     networks:
       - nw-internal
-
-  code_migration:
-    image: thecodeadventure/backend:latest
-    environment:
-      NODE_ENV: production 
-    command: sequelize db:migrate && sequelize db:seed:all
-    depends_on:
-      code_database:
-        condition: service_healthy
-
+  
   code_backend:
     image: thecodeadventure/backend:latest
     container_name: code_backend    
