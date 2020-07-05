@@ -12,7 +12,7 @@ services:
       - nw-internal
   
   code_backend:
-    image: thecodeadventure/backend:latest
+    image: thecodeadventure/codeadventure-backend:latest
     container_name: code_backend    
     environment:
       NODE_ENV: production 
@@ -22,7 +22,8 @@ services:
       - nw-internal  
 
   code_frontend:
-    image: thecodeadventure/frontend:latest
+    image: thecodeadventure/codeadventure-frontend:latest
+    container_name: code_frontend
     ports:
       - "80:80"
     networks:
@@ -30,4 +31,3 @@ services:
 
 networks:
   nw-internal:
-

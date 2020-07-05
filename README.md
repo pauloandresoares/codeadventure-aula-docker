@@ -15,5 +15,5 @@ docker-compose up
 Em seguida, quando a aplicação estiver funcionando, executar o seguinte comando:
 
 ```sh
-docker exec -it code_backend sequelize db:migrate && sequelize db:seed:all
+docker exec -it code_backend /bin/bash -c "sequelize db:migrate && sequelize db:seed:all"
 ``` 
