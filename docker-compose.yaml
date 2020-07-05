@@ -1,4 +1,4 @@
-version: '2.1'
+version: '3.5'
 services:
   code_database:
     image: mysql:8
@@ -8,8 +8,6 @@ services:
       MYSQL_DATABASE: codeadventure 
     ports:
       - "3306:3306"
-    healthcheck:
-      test: "/usr/bin/mysql --user=root --password=root --execute \"SHOW DATABASES;\""
     networks:
       - nw-internal
   
@@ -18,9 +16,6 @@ services:
     container_name: code_backend    
     environment:
       NODE_ENV: production 
-    depends_on:
-      code_database:
-        condition: service_healthy      
     ports:
       - "3000:3000"
     volumes:
@@ -34,6 +29,7 @@ services:
       - "80:80"
     networks:
       - nw-internal  
+
 networks:
   nw-internal:
 
